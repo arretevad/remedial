@@ -11,10 +11,10 @@ template <typename T>
 class vector {
  public:
   typedef size_t size_type;
-  typedef ptr_iterator<T, 1> iterator;
-  typedef ptr_iterator<const T, 1> const_iterator;
-  typedef ptr_iterator<T, -1> reverse_iterator;
-  typedef ptr_iterator<const T, -1> const_reverse_iterator;
+  typedef T* iterator;
+  typedef const T* const_iterator;
+  typedef T* reverse_iterator;
+  typedef const T* const_reverse_iterator;
 
   explicit vector(size_type n = 0, const T& x = T());
   vector(const vector<T>& v);
@@ -54,7 +54,7 @@ class vector {
   void pop_back();
   iterator insert(iterator p, const T& x);
   void insert(iterator p, size_type n, const T& x);
-  template <typename I> void insert(I p, I first, I last);
+  template <typename I> void insert(iterator p, I first, I last);
   iterator erase(iterator p);
   iterator erase(iterator first, iterator last);
   void swap(vector<T>& other) {
