@@ -5,7 +5,7 @@ all: main
 
 main: main.o
 
-main.o: main.cc sort.h vector.h
+main.o: main.cc sort.h vector.h test_util.h
 
 .PHONY: clean
 clean:
