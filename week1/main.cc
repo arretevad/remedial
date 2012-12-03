@@ -3,6 +3,7 @@
 #include <string>
 
 #include "vector.h"
+#include "sort.h"
 #include "test_util.h"
 
 using namespace rtl;
@@ -104,13 +105,28 @@ void test_insert() {
 void test_erase() {
 }
 
-int main(int argc, char** argv) {
+void test_vector() {
   test_construction_destruction_counts();
   test_constructors();
   test_push_back();
   test_pop_back();
   test_insert();
   test_erase();
+}
+
+void test_sort() {
+  int arr[] = { 5, 4, 3, 2, 1 };
+  int sorted_arr[] = { 1, 2, 3, 4, 5 };
+
+  vector<int> v(arr, arr + 5);
+  quicksort(v.begin(), v.end());
+
+  assert(compare(v.begin(), v.end(), sorted_arr, sorted_arr + 5));
+}
+
+int main(int argc, char** argv) {
+  test_vector();
+  test_sort();
 
   cout << "All tests passed" << endl;
 

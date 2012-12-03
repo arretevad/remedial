@@ -1,12 +1,40 @@
 // Sorting algorithms.
 #pragma once
 
+#include <algorithm>
+#include <iterator>
+#include <functional>
+
 namespace rtl {
 
 template <typename Iter, typename Comp>
 void mergesort(Iter first, Iter last, Comp comp);
 
+// Quicksort implementation very closely based on Wikipedia's in-place quicksort.
+// The determination of the pivot leaves much to be desired. 
 template <typename Iter, typename Comp>
-void quicksort(Iter first, Iter last, Comp comp);
+Iter partition(Iter left, Iter right, Iter pivot, const Comp& comp) {
+  std::iter_swap(pivot, right - 1);
+  const auto& pivot_value = *(right - 1);
+
+  Iter store = left;
+  for (Iter it = left; it != (right - 1); ++it) {
+    if (comp(*it, pivot_value)) {
+      std::iter_swap(it, store++);
+    }
+  }
+  std::iter_swap(store, right - 1);
+  return store;
+}
+
+template <typename Iter, typename Comp = std::less<typename std::iterator_traits<Iter>::value_type>>
+void quicksort(Iter left, Iter right, const Comp& comp = Comp()) {
+  if (left >= (right - 1)) return;
+
+  Iter pivot = left;  // <- Right here! This is a bad choice.
+  Iter new_pivot = partition(left, right, pivot, comp);
+  quicksort(left, new_pivot);
+  quicksort(new_pivot + 1, right);
+}
 
 }  // namespace rtl
